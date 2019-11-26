@@ -2,11 +2,13 @@ import os
 
 
 def display(temp):
+    print("  |   |  ")
     print(temp[7], "|", temp[8], "|", temp[9])
-    print("-|--|-")
+    print("--|---|--")
     print(temp[4], "|", temp[5], "|", temp[6])
-    print("-|--|-")
+    print("--|---|--")
     print(temp[1], "|", temp[2], "|", temp[3])
+    print("  |   |  ")
 
 
 def user_choice():
@@ -68,7 +70,7 @@ def check_ticktok():
 
 def check_row():
     for i in range(1, 10, 3):
-        if list1[i] == list1[i+1] and list1[i] == list1[i+2] and list1[i] != '':
+        if list1[i] == list1[i+1] and list1[i] == list1[i+2] and list1[i] != ' ':
             return True
     else:
         return False
@@ -76,7 +78,7 @@ def check_row():
 
 def check_col():
     for i in range(1, 4, 1):
-        if list1[i] == list1[i + 3] and list1[i] == list1[i + 6] and list1[i] != '':
+        if list1[i] == list1[i + 3] and list1[i] == list1[i + 6] and list1[i] != ' ':
             return True
     else:
         return False
@@ -91,7 +93,7 @@ def check_diagonal():
 
 def left_diagonal():
     i = 1
-    if list1[i] == list1[i + 4] and list1[i] == list1[i + 8] and list1[i] != '':
+    if list1[i] == list1[i + 4] and list1[i] == list1[i + 8] and list1[i] != ' ':
             return True
     else:
         return False
@@ -99,7 +101,7 @@ def left_diagonal():
 
 def right_diagonal():
     i = 3
-    if list1[i] == list1[i + 2] and list1[i] == list1[i + 4] and list1[i] != '':
+    if list1[i] == list1[i + 2] and list1[i] == list1[i + 4] and list1[i] != ' ':
         return True
     else:
         return False
@@ -113,7 +115,7 @@ usr_input = input()
 
 if usr_input == "yes":
     ticktok_match = 'no'
-    list1 = ['']*10
+    list1 = [' ']*10
     temp_list = []
     num_list = list(range(1, 10))
     player1_choice, player2_choice = user_choice()
