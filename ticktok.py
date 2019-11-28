@@ -1,6 +1,8 @@
 import os
 import random as ran
 
+
+
 def display(temp):
     print("  |   |  ")
     print(temp[7], "|", temp[8], "|", temp[9])
@@ -19,7 +21,8 @@ def user_choice(pl1_name):
         player2 = 'O' if player1 == 'X' else 'X'
         return player1,player2
     else:
-        player1,player2 = user_choice()
+        print("You enter wrong Choice.")
+        player1, player2 = user_choice(pl1_name)
         return player1, player2
 
 
@@ -57,16 +60,16 @@ def check_player(pl1, pl2, pl1_name, pl2_name):
     while board_check(list1):
         if ticktok_match == 'no':
             if p_flag == 1:
-                if fetch_input(pl1, "Player 1"):
-                    check_ticktok()
+                if fetch_input(pl1, pl1_name):
+                    check_ticktac()
                     p_flag = 0
                 else:
                     p_flag = 1
 
             else:
-                if fetch_input(pl2, "Player 2"):
+                if fetch_input(pl2, pl2_name):
                     p_flag = 1
-                    check_ticktok()
+                    check_ticktac()
                 else:
                     p_flag = 0
         else:
@@ -79,7 +82,7 @@ def check_player(pl1, pl2, pl1_name, pl2_name):
         print("Tie Match")
 
 
-def check_ticktok():
+def check_ticktac():
 
     if check_row() == True or check_col() == True or check_diagonal() == True:
         global ticktok_match
@@ -128,7 +131,7 @@ def right_diagonal():
         return False
 
 
-print("Welcome to Tiktok Game \nThe pattern should be like below")
+print("Welcome to Tik tac toe Game \nThe pattern should be like below")
 display(list(range(10)))
 print("Enter your name for player 1")
 player1_name = input()
@@ -145,10 +148,16 @@ while True:
         list1 = [' ']*10
         temp_list = []
         num_list = list(range(1, 10))
-        # first_player = first_choice()
-        player1_choice, player2_choice = user_choice(player1_name)
-        check_player(player1_choice, player2_choice,player1_name,player2_name)
-        check_ticktok()
+        first_player = first_choice()
+        if first_player == 1:
+            player1 = player1_name
+            player2 = player2_name
+        else:
+            player1 = player2_name
+            player2 = player1_name
+
+        player1_choice, player2_choice = user_choice(player1)
+        check_player(player1_choice, player2_choice, player1, player2)
         print("Do you want to play again? yes or no")
         user_reply = input()
         if user_reply == 'yes':
