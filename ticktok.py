@@ -1,5 +1,5 @@
 import os
-
+import random as ran
 
 def display(temp):
     print("  |   |  ")
@@ -11,12 +11,20 @@ def display(temp):
     print("  |   |  ")
 
 
-def user_choice():
-    print("Enter enter your choice X or O")
+def user_choice(pl1_name):
+    print("Enter enter your choice {}, X or O".format(pl1_name))
     user_input = input()
     player1 = user_input.upper()
-    player2 = 'O' if player1 == 'X' else 'X'
-    return player1, player2
+    if player1 == 'X' or player1 == 'O':
+        player2 = 'O' if player1 == 'X' else 'X'
+        return player1,player2
+    else:
+        player1,player2 = user_choice()
+        return player1, player2
+
+
+def first_choice():
+    return ran.randint(1,2)
 
 
 def fetch_input(pval, name):
@@ -24,8 +32,9 @@ def fetch_input(pval, name):
     res_list = list(set(num_list).intersection(set(temp_list)))
     print(f"{name} : Enter your choice where you marked 1-9")
     val = int(input())
-    if val in res_list:
-        print(f"{val} position is already taken")
+
+    if val in res_list or val not in (list(range(1,10))):
+        print(f"{val} position is not available")
         return False
     else:
         temp_list.append(val)
@@ -33,29 +42,41 @@ def fetch_input(pval, name):
         return True
 
 
-def check_player(pl1, pl2):
+def board_check(board):
+    char = ' '
+    if char in board[1:]:
+        return True
+    else:
+        return False
+
+
+def check_player(pl1, pl2, pl1_name, pl2_name):
 
     p_flag = 1
 
-    while ticktok_match == 'no':
-        if p_flag == 1:
-            if fetch_input(pl1, "Player 1"):
-                check_ticktok()
-                p_flag = 0
-            else:
-                p_flag = 1
+    while board_check(list1):
+        if ticktok_match == 'no':
+            if p_flag == 1:
+                if fetch_input(pl1, "Player 1"):
+                    check_ticktok()
+                    p_flag = 0
+                else:
+                    p_flag = 1
 
+            else:
+                if fetch_input(pl2, "Player 2"):
+                    p_flag = 1
+                    check_ticktok()
+                else:
+                    p_flag = 0
         else:
-            if fetch_input(pl2, "Player 2"):
-                p_flag = 1
-                check_ticktok()
-            else:
-                p_flag = 0
-
+            display(list1)
+            print(f"The winner is {pl1_name}") if p_flag == 0 else print(f"The winner is {pl2_name}")
+            break
 
     else:
         display(list1)
-        print(f"The winner is Player 1") if p_flag == 0 else print(f"The winner is Player 2")
+        print("Tie Match")
 
 
 def check_ticktok():
@@ -94,7 +115,7 @@ def check_diagonal():
 def left_diagonal():
     i = 1
     if list1[i] == list1[i + 4] and list1[i] == list1[i + 8] and list1[i] != ' ':
-            return True
+        return True
     else:
         return False
 
@@ -108,22 +129,38 @@ def right_diagonal():
 
 
 print("Welcome to Tiktok Game \nThe pattern should be like below")
-
 display(list(range(10)))
-print("Shall start the game : Yes or no")
-usr_input = input()
+print("Enter your name for player 1")
+player1_name = input()
+print("Enter your name for player 2")
+player2_name = input()
 
-if usr_input == "yes":
-    ticktok_match = 'no'
-    list1 = [' ']*10
-    temp_list = []
-    num_list = list(range(1, 10))
-    player1_choice, player2_choice = user_choice()
-    check_player(player1_choice, player2_choice)
-    check_ticktok()
-else:
-    exit("Thank You")
+while True:
 
+    print("Shall start the game : Yes or no")
+    usr_input = input()
+
+    if usr_input == "yes":
+        ticktok_match = 'no'
+        list1 = [' ']*10
+        temp_list = []
+        num_list = list(range(1, 10))
+        # first_player = first_choice()
+        player1_choice, player2_choice = user_choice(player1_name)
+        check_player(player1_choice, player2_choice,player1_name,player2_name)
+        check_ticktok()
+        print("Do you want to play again? yes or no")
+        user_reply = input()
+        if user_reply == 'yes':
+            continue
+        elif user_reply == 'no':
+            break
+        else:
+            exit("Sorry you enter wrong input")
+    else:
+        exit("Thank You")
+
+print("Thank you for participating")
 
 
 
