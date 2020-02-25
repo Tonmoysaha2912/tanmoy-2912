@@ -1,7 +1,6 @@
 from setting import *
 from word2number import w2n
 
-
 class PlayGame(BlackJack):
 
     def __init__(self):
